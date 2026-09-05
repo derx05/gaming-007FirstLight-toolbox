@@ -81,6 +81,9 @@ kept out of the repository by `.gitignore`.
 - [DepotDownloader](https://github.com/SteamRE/DepotDownloader) (SteamRE) – fetching the launch depot
 - The *Skip Intro* mod (Nexus) served as the reference for a working patch header and manifest
 
+The research and the tooling behind this mod were made with the help of Claude (Anthropic's Claude Code);
+the result was verified in game by a human.
+
 007 First Light © IO Interactive. This mod ships no audio and no original game data other than the
 restored property values described above; the release zip additionally contains the rebuilt 19 KB
 soundbank (no media) and the manifest with a changed patch level.

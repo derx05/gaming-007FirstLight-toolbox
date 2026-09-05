@@ -64,4 +64,11 @@ against the installed game; `tools/bank_diff_files.py` shows the HIRC objects th
 RPKG-Tool (glacier-modding) for the hash list and the manifest keys, wwiser (bnnm), vgmstream, DepotDownloader
 (SteamRE). The community *Skip Intro* mod served as the reference for a working patch header and manifest.
 
+## AI assistance
+
+The investigation, the Python tools and this documentation were produced with the help of Claude (Anthropic's
+Claude Code, model Claude Fable 5.1). The archive diffs, format findings and the patch itself were verified
+against the real game files at every step, and the in-game result was confirmed by a human. Errors are the
+maintainer's responsibility, not the model's.
+
 007 First Light © IO Interactive. This repository contains no game audio.
