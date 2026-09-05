@@ -11,7 +11,7 @@ automation and the Volume/MakeUpGain properties along the node hierarchy, resamp
 writes 24-bit FLAC. Infinite loops are rendered twice and faded out at the last exit cue. Step/random
 containers produce one file per choice ("variant").
 
-Usage: python tools/render_music_timeline.py
+Usage: python tools/render_music_timeline.py   (normally called by extract_menu_music.py)
 Needs: external/wwiser/wwiser.pyz, external/vgmstream/vgmstream-cli.exe, numpy, scipy, soundfile,
        render/banks/*.bnk, render/wem/<id>.wem
 """
@@ -230,11 +230,14 @@ def render_sequence(bank, seq):
 # ----------------------------------------------------------------------------- main
 def main():
     renders = []
-    for bnk, label in BANKS:
-        xml = os.path.join(ROOT, 'research', 'banks', bnk[:-4] + '.wwiser.xml')
+    bdir = os.path.join(ROOT, 'render', 'banks')
+    banks = [(b, l) for b, l in BANKS if os.path.exists(os.path.join(bdir, b))]
+    if not banks:
+        raise SystemExit('no banks in render/banks - run extract_menu_music.py first')
+    for bnk, label in banks:
+        xml = os.path.join(bdir, bnk + '.xml')          # wwiser -d xml writes <bank>.bnk.xml next to the bank
         if not os.path.exists(xml):
-            subprocess.run([sys.executable, WWISER, '-d', 'xml', bnk], cwd=os.path.join(ROOT, 'render', 'banks'), capture_output=True)
-            os.replace(os.path.join(ROOT, 'render', 'banks', bnk + '.xml'), xml)
+            subprocess.run([sys.executable, WWISER, '-d', 'xml', bnk], cwd=bdir, capture_output=True)
         bank = Bank(xml)
         sw = next(o for o in bank.objs.values() if o.get('name') == 'CAkMusicSwitchCntr' and '3931772277' in ET.tostring(o, encoding='unicode'))
         for state, sname in STATE_NAMES.items():

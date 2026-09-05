@@ -1,15 +1,14 @@
-# third-party tools (download from their official sources, see ARCHITECTURE.md)
+# third-party tools: python setup.py downloads them from their official GitHub releases
 external/
-# game-derived data: never commit or redistribute
+# game-derived data, produced from YOUR installed game by extract_menu_music.py / rebuild.py: never commit, never redistribute
 versions/
 render/wem/
 render/banks/
 render/txtp/
 audio/renders/
-research/banks/*.WBNK
-research/packagedefinition.txt.original*
 release/*.zip
-# the built patch contains a rebuilt IOI soundbank; un-ignore deliberately if you want it in the repo
-# mod/chunk0patch1.rpkg
-# mod/packagedefinition.txt
+**/*.WBNK
+**/packagedefinition.txt.original*
 __pycache__/
+# committed on purpose: mods/*/chunk0patchN.rpkg (a rebuilt 19 KB soundbank without any media) and the
+# patchlevel=310 manifest - the same two files every community RPKG mod ships.

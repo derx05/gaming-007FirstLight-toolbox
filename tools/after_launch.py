@@ -9,7 +9,7 @@ from rpkg_read import read_resource, read_raw
 LAUNCH=sys.argv[1] if len(sys.argv)>1 else 'versions/launch_2026-05-27_manifest_7322178669849310269/Runtime/chunk0.rpkg'
 OLD=sys.argv[2] if len(sys.argv)>2 else 'D:/SteamLibrary/steamapps/common/007 First Light/Runtime/chunk0.rpkg'
 OUT=sys.argv[3] if len(sys.argv)>3 else 'research/extracted'
-VG=os.path.abspath('vgmstream/vgmstream-cli.exe')
+VG=os.path.abspath('external/vgmstream/vgmstream-cli.exe')
 mm=json.load(open('tools/media_map.json'))
 menu={e['rpkg_hash']:(grp,e['wem_id']) for grp in ('splash','theme') for e in mm[grp]}
 L=parse(LAUNCH); O=parse(OLD); lh={e['hash']:e for e in L['entries']}; oh={e['hash']:e for e in O['entries']}

@@ -1,5 +1,8 @@
 # 007 First Light — restore the pre-1.1.0 boot/title fanfare (handoff brief)
 
+> Historical document, kept as written during the investigation. Paths such as `mod/`, `docs/`, `older/`, `old/`,
+> `cmp/` refer to the working folders of that time; the repository was restructured afterwards (see `ARCHITECTURE.md`).
+
 Written 2026-09-05 during the first research session. Everything below was verified against the
 user's files unless marked "unverified". Read fully before touching anything.
 

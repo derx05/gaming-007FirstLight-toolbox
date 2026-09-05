@@ -28,17 +28,17 @@ Notes
 
 ## Audio-free alternative: build the patch from your own game files
 
-`mod\restore_fanfare.py` contains **only** the restored Wwise property values (a few hundred bytes of
+`mods\launch-title-fanfare\restore_fanfare.py` (GitHub) contains **only** the restored Wwise property values (a few hundred bytes of
 hex) and rebuilds the patch from *your* `chunk0.rpkg`:
 
 ```
 pip install lz4
-python mod\restore_fanfare.py "D:\SteamLibrary\steamapps\common\007 First Light\Runtime"
+python mods\launch-title-fanfare\restore_fanfare.py "D:\SteamLibrary\steamapps\common\007 First Light\Runtime"
 ```
 
 It checks the MD5 of the current soundbank (`6ca50654…`), rebuilds it, checks that the result equals
 the launch bank (`d5ccca44…`) and writes `chunk0patch1.rpkg` next to `chunk0.rpkg`. You still need the
-`patchlevel=310` manifest (`mod\packagedefinition.txt`, or build your own with `tools\pkgdef.py`).
+`patchlevel=310` manifest (`mods\launch-title-fanfare\packagedefinition.txt`, or build your own with `tools\pkgdef.py`).
 
 ## What exactly changed in 1.0.x (and what the mod reverts)
 
