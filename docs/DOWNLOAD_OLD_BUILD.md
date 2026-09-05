@@ -6,9 +6,7 @@ any of them for a game **you own** with the open-source [DepotDownloader](https:
 (SteamRE). Only the two files the tools need are fetched: `chunk0.rpkg` (about 20 GB) and
 `packagedefinition.txt`.
 
-Read the legal section of the [README](../README.md#legal) first. Short version: what you download is a
-private copy for your own use. Never upload or share a downloaded depot, an extracted soundbank or an audio
-render.
+See the legal section of the [README](../README.md#legal) for the terms this touches.
 
 ## 1. Tools
 

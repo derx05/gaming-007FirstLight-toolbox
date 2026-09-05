@@ -71,37 +71,23 @@ listening, are covered in [docs/DOWNLOAD_OLD_BUILD.md](docs/DOWNLOAD_OLD_BUILD.m
 
 ## Legal
 
-Not legal advice; the maintainer is not a lawyer. This is what the repository does and where the gray
-zones are, so you can decide for yourself.
+Not legal advice. The repository contains code and documentation written for this project (MIT), format
+descriptions, and per mod a few hundred bytes of Wwise property values from an older build of one soundbank.
+The committed patch RPKG is a rebuilt 19 KB soundbank structure without audio; the committed manifest is the
+game's own with one number changed. No stems, soundbanks, renders or depots are included; the tools produce
+those from your own installation into git-ignored folders, and they stay there.
 
-**What is here.** Code and documentation written for this project (MIT licensed), reverse-engineered format
-descriptions, and for each mod a few hundred bytes of Wwise property values taken from an older build of one
-soundbank. The committed patch RPKG is a rebuilt 19 KB soundbank *structure* (no audio) and the committed
-manifest is the game's own manifest with one number changed. That is the same pair of files every community
-RPKG mod for this game ships.
+Points worth knowing before you use or fork this:
 
-**What is not here, and must stay out.** No `.wem` stems, no soundbanks, no FLAC renders, no downloaded
-depots. The tools produce all of that from your own installation into git-ignored folders. It is a private
-copy of content you hold a license for. Do not upload it, do not share it, do not put it in a mod. If you
-fork this repository, keep the `.gitignore`.
+- The RPKG XOR key and the manifest XTEA keys are in the source. They have been public in glacier-modding's
+  RPKG-Tool for years, but some jurisdictions treat bypassing even light obfuscation as circumventing a
+  technical protection measure (DMCA §1201, §95a UrhG).
+- The Steam Subscriber Agreement and IOI's EULA most likely prohibit reverse engineering and modifying the game.
+- DepotDownloader fetches older builds through your own Steam account, for games you own. Steam grants that;
+  the publisher has not endorsed it.
+- IOI has tolerated community mods for Hitman. Nothing guarantees the same for 007 First Light.
 
-**Gray zones, honestly.**
-
-- *Keys.* The RPKG XOR key and the manifest XTEA keys are in the source (`tools/`, `restore_fanfare.py`).
-  They have been public in glacier-modding's RPKG-Tool for years, for Hitman and now for this game, but some
-  jurisdictions treat bypassing even light obfuscation as circumventing a technical protection measure
-  (DMCA §1201 in the US, §95a UrhG in Germany). The counter-argument is interoperability for modding, and IOI's
-  long-standing tolerance of the Hitman modding scene; there is no court decision either way for this game.
-- *Terms of use.* The Steam Subscriber Agreement and IOI's EULA most likely prohibit reverse engineering and
-  modifying the game. That is a contractual matter between you and them, not a copyright one, but it exists.
-- *Older builds.* DepotDownloader logs into *your* Steam account and can only fetch games you own. Steam's
-  servers grant older manifests of owned games; the publisher has not endorsed it. The downloaded depot is
-  yours to keep privately, not to share.
-- *Mods in general.* IOI has tolerated and at times supported community mods for Hitman. Nothing guarantees
-  the same attitude for 007 First Light.
-
-If IO Interactive objects to anything in this repository the maintainer will take it down. Use and fork at
-your own risk.
+If IO Interactive objects to anything here, it will take it down.
 
 ## Credits
 
