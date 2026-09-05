@@ -1,0 +1,15 @@
+# third-party tools (download from their official sources, see ARCHITECTURE.md)
+external/
+# game-derived data: never commit or redistribute
+versions/
+render/wem/
+render/banks/
+render/txtp/
+audio/renders/
+research/banks/*.WBNK
+research/packagedefinition.txt.original*
+release/*.zip
+# the built patch contains a rebuilt IOI soundbank; un-ignore deliberately if you want it in the repo
+# mod/chunk0patch1.rpkg
+# mod/packagedefinition.txt
+__pycache__/
