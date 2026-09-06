@@ -43,6 +43,9 @@
 │       ├── NEXUS_PAGE.md      description + build tutorial (needs the launch archive)
 │       ├── build_from_launch.py  builds chunk0patch2.rpkg from the launch chunk0 + the installed game (MD5-checked)
 │       ├── build.py           rebuild.py hook: builds if versions/ holds the launch archive, else skips
+│       ├── RESEARCH_LOG.md    how the swapped stem, its bank and its switch path were found; dead ends
+│       ├── research/          the four research scripts (annotated) + media lists of the music event, both builds
+│       ├── packagedefinition.txt  manifest with patchlevel=310 (identical to the fanfare mod's)              [committed]
 │       └── chunk0patch2.rpkg  built patch: launch stem + patched music event (13 MB, contains audio)   [ignored]
 ├── render/                    inputs of render_music_timeline.py
 │   ├── banks/                 mx_mainmenu_current.bnk, mx_mainmenu_launch.bnk (+ wwiser .xml)   [ignored]
@@ -67,9 +70,15 @@
    For the title music the result was: only `mx_mainmenu` (WBNK `01980B15FE07DD81`) changed, no media did.
 2. **Understand it** – `bank_diff_files.py` gives the changed HIRC objects; wwiser `-d xml` on both banks
    names the fields (playlist SegmentID, fBeginTrimOffset, clip automation FadeIn, Volume prop).
-3. **Build** – a mod's builder (`restore_fanfare.py`) re-reads the *user's* bank, swaps the changed object
-   payloads, verifies MD5s and writes the patch RPKG; `make_patch.py` is the generic equivalent. `pkgdef.py`
-   produces the `patchlevel=310` manifest. `build.py` wraps that into the release zip.
+3. **Build** – two patterns so far:
+   - *Property change* (fanfare): the builder (`restore_fanfare.py`) re-reads the *user's* bank, swaps the changed
+     object payloads, verifies MD5s and writes the patch RPKG. Audio-free, ships in the repo.
+   - *Media swap* (boat chase): the old stem no longer exists in the game, so the builder
+     (`build_from_launch.py`) takes the user's own launch archive, writes the old stem into the *current* WWEM
+     resource and swaps that stream's prefetch snippet inside the WWEV. The bank is untouched, so nothing in
+     chunk1 has to be patched. The result contains audio and is never committed.
+   `make_patch.py` is the generic writer, `pkgdef.py` produces the `patchlevel=310` manifest, each mod's
+   `build.py` wraps its builder for `rebuild.py`.
 4. **Listen** – `extract_menu_music.py` gathers stems and banks; `render_music_timeline.py` re-implements
    Wwise interactive-music playback offline (wwiser XML -> segment timeline with entry/exit cues, pre-entry and
    post-exit overlap, clip trims, fade automation, hierarchy volumes, per-stem resampling) and writes one FLAC
@@ -91,11 +100,17 @@
 - **WBNK** = `00 00` + `u32 bankLength` + standard Wwise `.bnk` (version 150, Wwise 2023.1).
 - **WWEV** = `u32 nameLen, name\0, u8, f32 -1, u32, u32 nEmbedded, [u32 id, u32 id, u32 size, RIFF]…,
   u32 nStreamed, [u32 dependIdx, u32 id, u32 id, u32 prefetchSize, prefetch]…`; `dependIdx` indexes
-  the resource's reference table and yields the WWEM hash.
+  the resource's reference table and yields the WWEM hash. `prefetch` is literally the first `prefetchSize`
+  bytes of that wem (verified), so replacing a stream means replacing the WWEM *and* this snippet. The in-game
+  music is one event, `MX_Music_SW_Play` (WWEV `01A872A294A76EAD`, 5,397 streams, all in chunk0); the campaign
+  music bank is chunk1 WBNK `015750D5211B2EAE` (unnamed in the hash list).
 - **HIRC v150 NodeBaseParams** (Sound after 18 bytes, containers after 4): `u8 fxOverride, u8 numFx,
   [fx…], u8, u8, u32 overrideBusId, u32 directParentId, …`.
 - **Music**: a Music Switch container maps state ids (group `State_MX_MainMenu` = 3931772277; Splash 160038168,
   Landing 2548270042, Loading 3573931707, MainMenu 3604647259) to Random/Sequence containers or segments.
+  Campaign music: `State_MX_GameFlow` (1571198769) = `Campaign` (30729851) / `Global` (1465331116), then a mission
+  group (1814311043) with states `m01_clover` … `m10_ivy` (ids in `mods/orchid-boat-chase-music/RESEARCH_LOG.md`),
+  then per-mission section switches whose state names are not resolved.
   Segments carry Entry (id 43573010) and Exit (1539036744) cue markers; the next segment's entry cue is placed
   at the previous one's exit cue, pre-entry and post-exit both audible. Clips: audible start = fPlayAt +
   fBeginTrimOffset, source offset = fBeginTrimOffset, length = fSrcDuration - fBeginTrimOffset + fEndTrimOffset.

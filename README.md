@@ -68,6 +68,8 @@ listening, are covered in [docs/DOWNLOAD_OLD_BUILD.md](docs/DOWNLOAD_OLD_BUILD.m
 3. Prefer restoring *values* over shipping files: put the old payloads into a small patcher like
    `mods/launch-title-fanfare/restore_fanfare.py` that rewrites the user's own resource, and let `tools/make_patch.py`
    or its `write_patch` produce the `chunkNpatchM.rpkg`. `tools/pkgdef.py` makes the `patchlevel=310` manifest.
+   If the old *audio* itself is gone from the game, follow `mods/orchid-boat-chase-music/build_from_launch.py`:
+   the user supplies the old archive and the builder swaps the stem plus its prefetch in the event, bank untouched.
 4. Create `mods/<name>/` with `build.py` exposing `build(runtime)`, a `NEXUS_PAGE.md`, and check the result in game.
    `rebuild.py` picks the folder up automatically.
 
