@@ -28,7 +28,7 @@
 │   ├── render_music_timeline.py  offline Wwise music engine: segments/cues/clips/fades -> 24-bit FLAC per state & variant
 │   └── media_map.json         menu-music wem id -> WWEM hash map (splash + theme stems)
 ├── mods/
-│   └── launch-title-fanfare/  ── one folder per mod ──
+│   ├── launch-title-fanfare/  ── one folder per mod ──
 │       ├── NEXUS_PAGE.md      user-facing description (install, uninstall, exact change table)
 │       ├── RESEARCH_LOG.md    the complete investigation log (historical paths)
 │       ├── restore_fanfare.py standalone audio-free builder (python3 + lz4): rebuilds the launch bank from the
@@ -39,6 +39,11 @@
 │       ├── packagedefinition.txt.original  backup of the user's retail manifest                [ignored]
 │       ├── images/            banner and thumbnail for the mod page
 │       └── research/          wwiser XML dumps of launch + current bank (committed), the WBNKs   [WBNK ignored]
+│   └── orchid-boat-chase-music/
+│       ├── NEXUS_PAGE.md      description + build tutorial (needs the launch archive)
+│       ├── build_from_launch.py  builds chunk0patch2.rpkg from the launch chunk0 + the installed game (MD5-checked)
+│       ├── build.py           rebuild.py hook: builds if versions/ holds the launch archive, else skips
+│       └── chunk0patch2.rpkg  built patch: launch stem + patched music event (13 MB, contains audio)   [ignored]
 ├── render/                    inputs of render_music_timeline.py
 │   ├── banks/                 mx_mainmenu_current.bnk, mx_mainmenu_launch.bnk (+ wwiser .xml)   [ignored]
 │   ├── wem/<decimal id>.wem   the 83 menu-music stems (identical in all builds so far)          [ignored]
@@ -50,6 +55,7 @@
 │   ├── wwiser/wwiser.pyz      wwiser
 │   ├── DepotDownloader/       SteamRE DepotDownloader
 │   └── rpkg-cli/              optional: RPKG-Tool CLI, first-light branch, only for its hash list
+├── idx/                       RPKG index JSON dumps from tools/rpkg_index.py (research scratch)        [ignored]
 └── versions/                  one sub-folder per downloaded game build (DepotDownloader output)    [ignored]
     └── <label>_manifest_<id>/Runtime/chunk0.rpkg  (about 20 GB each)
 ```

@@ -10,5 +10,9 @@ release/*.zip
 **/*.WBNK
 **/packagedefinition.txt.original*
 __pycache__/
+# RPKG index dumps written by tools/rpkg_index.py (hashes and offsets only, but 60-140 MB each)
+idx/
 # committed on purpose: mods/*/chunk0patchN.rpkg (a rebuilt 19 KB soundbank without any media) and the
 # patchlevel=310 manifest - the same two files every community RPKG mod ships.
+# contains IOI audio (built from the user's own launch archive) - never commit
+mods/orchid-boat-chase-music/chunk0patch*.rpkg

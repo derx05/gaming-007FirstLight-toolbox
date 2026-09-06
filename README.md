@@ -13,9 +13,11 @@ game media and no game data beyond a handful of Wwise property values (see [Lega
 | Mod | What it does | Get it |
 |---|---|---|
 | [`mods/launch-title-fanfare/`](mods/launch-title-fanfare/NEXUS_PAGE.md) | Restores the launch-build (2026-05-27) title-screen music arrangement that update 1.0.2/1.0.3 replaced. Four Wwise property values in one soundbank; no audio is added or replaced. | [Nexus Mods](https://www.nexusmods.com/007firstlight/mods/207) or the releases page |
+| [`mods/orchid-boat-chase-music/`](mods/orchid-boat-chase-music/NEXUS_PAGE.md) | Restores the orchestral launch recording of the mission 9 boat chase music that 1.0.2/1.0.3 replaced with an electronic one. The old audio is gone from the current game, so this mod is a build script: you download the launch build yourself (20 GB) and it writes the patch. | build it yourself, see its page |
 
-Every mod folder holds its user-facing description (`NEXUS_PAGE.md`), a standalone audio-free builder, the
-built patch RPKG and manifest, a `build.py` used by `rebuild.py`, and its research notes.
+Every mod folder holds its user-facing description (`NEXUS_PAGE.md`), a standalone builder, a `build.py` used by
+`rebuild.py`, and where possible the built patch RPKG. A patch that would contain game audio is never committed;
+the builder makes it from the user's own archives.
 
 Install a mod like every other 007 First Light RPKG mod: back up `Runtime\packagedefinition.txt`, copy the
 zip's `Runtime\` files into the game's `Runtime\` folder, or let a mod manager do it. The mod page has the
