@@ -1,0 +1,69 @@
+Brings back the orchestral music of the boat chase in mission 9 (the mission with Isola) exactly as it played in the launch build of 007 First Light (27 May 2026). Update 1.0.2/1.0.3 (early June 2026) swapped that cue for a new, more electronic recording of the same length. This mod puts the launch recording back.
+
+Tested on the current Steam build (1.1.x, September 2026) by several players, together with the [url=https://www.nexusmods.com/007firstlight/mods/207]Launch Title Fanfare[/url] mod. [b]No audio is included in the download[/b], read on for why and how.
+
+[size=5][b]Why you build this one yourself[/b][/size]
+
+The old recording no longer exists in the current game files, and it is IO Interactive's music, so it cannot be uploaded here. Steam, however, still lets you download the launch build of a game you own. The download is a small build kit: a Python script pulls the original cue out of that launch build and writes the patch for you. Cost: one 20 GB download and about ten minutes.
+
+[size=5][b]Requirements[/b][/size]
+
+[list]
+[*]007 First Light on Steam (the launch build is fetched with your own account)
+[*]Windows and Python 3.12 or newer from python.org, then once in a terminal: pip install lz4
+[*][url=https://github.com/SteamRE/DepotDownloader/releases]DepotDownloader[/url] (open source, SteamRE), the file DepotDownloader-windows-x64.zip
+[*]20 GB of free disk space while building
+[/list]
+
+[size=5][b]Build and install[/b][/size]
+
+[b]1.[/b] Unzip the build kit into a folder. Unzip DepotDownloader into the same folder.
+
+[b]2.[/b] Open a terminal in that folder and download the launch build's chunk0.rpkg. A QR code appears; scan it with the Steam mobile app to log in (your password never touches the tool):
+[code]DepotDownloader.exe -app 3768760 -depot 3768761 -manifest 7322178669849310269 -qr -filelist filelist.txt -dir launch -max-downloads 8[/code]
+HTTP 503 errors from Steam's CDN are transient. Run the same command again, it resumes.
+
+[b]3.[/b] Build the patch (adjust the game path):
+[code]python build_from_launch.py launch\Runtime\chunk0.rpkg "D:\SteamLibrary\steamapps\common\007 First Light\Runtime"[/code]
+The script checks the MD5 of the original cue, writes chunk0patch2.rpkg (13 MB) next to itself and reads it back to verify it. If you have [b]no other mod installed yet[/b], add --manifest at the end of the command: you also get a packagedefinition.txt with patchlevel 310, which every patch mod needs (the retail file has patchlevel 0 and ignores all patch files).
+
+[b]4.[/b] Copy chunk0patch2.rpkg into the game's Runtime folder. If you built a manifest in step 3, back up the game's Runtime\packagedefinition.txt and copy the new one over it.
+
+[b]5.[/b] Play the boat chase. Delete the launch folder afterwards to get the 20 GB back.
+
+[b]Notes[/b]
+[list]
+[*]The patch is built for slot 2 so it sits next to the Launch Title Fanfare mod in slot 1. If slot 2 is taken, pass another number as third argument (for example 3) before --manifest. The RPKG header must match the file name, so do not just rename the file.
+[*]Mod managers: install the built chunk0patch2.rpkg like any other patch file.
+[*]Uninstall: delete Runtime\chunk0patch2.rpkg and restore your manifest backup if you replaced it.
+[/list]
+
+[size=5][b]What exactly changed in 1.0.x (and what the mod reverts)[/b][/size]
+
+All in-game music is streamed through one Wwise event, MX_Music_SW_Play (resource 01A872A294A76EAD, 5,397 stems). Between the launch build and the 11 June 2026 build exactly one stem was exchanged, and nothing in the music media has changed since:
+
+[list]
+[*]Launch (restored): Wwise source 3E5F24AC, resource 0164B2AAA73D4801, removed from the game in 1.0.x
+[*]1.0.x to current: Wwise source 236D6A95, resource 015E589FC5DD9B12
+[*]Both: 1 min 13.7 s, 48 kHz stereo, sample for sample the same length
+[/list]
+
+The campaign music bank in chunk1.rpkg reaches this stem via GameFlow = Campaign, mission m09_orchid, one section of that mission. The bank is left untouched: the patch puts the launch recording behind the current source id and swaps the 3.8 KB prefetch snippet of that stream inside the event, so the current bank's track plays the old cue. Two resources, nothing else.
+
+[size=5][b]How the patch is applied by the game[/b][/size]
+
+chunk0patch2.rpkg is an RPKG v2 patch archive with two resources. Its header encodes chunk 0 / patch 2, which must match the file name. The game loads every chunk0patchN.rpkg with N up to the patchlevel from the manifest, so both resources override the ones in chunk0.rpkg.
+
+[size=5][b]Credits / tools[/b][/size]
+
+[list]
+[*][url=https://github.com/glacier-modding/RPKG-Tool]RPKG-Tool[/url] (first-light branch, glacier-modding): hash list, XTEA keys, format reference
+[*][url=https://github.com/bnnm/wwiser]wwiser[/url] (bnnm): Wwise bank parsing
+[*][url=https://vgmstream.org]vgmstream[/url]: Wwise Vorbis decoding
+[*][url=https://github.com/SteamRE/DepotDownloader]DepotDownloader[/url] (SteamRE): fetching the launch depot
+[*]Source code, research log and the rest of the toolbox: [url=https://github.com/derx05/gaming-007FirstLight-toolbox]github.com/derx05/gaming-007FirstLight-toolbox[/url]
+[/list]
+
+The research and the tooling behind this mod were made with the help of Claude (Anthropic's Claude Code); the result was verified in game by humans.
+
+007 First Light is copyright IO Interactive. This download ships no audio and no game data; the patch you build from your own copies of the game stays on your machine.

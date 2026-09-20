@@ -41,6 +41,7 @@
 │       └── research/          wwiser XML dumps of launch + current bank (committed), the WBNKs   [WBNK ignored]
 │   └── orchid-boat-chase-music/
 │       ├── NEXUS_PAGE.md      description + build tutorial (needs the launch archive)
+│       ├── NEXUS_PAGE.bbcode.txt  the same text in Nexus BBCode (no inline code, tables as lists) for pasting
 │       ├── build_from_launch.py  builds chunk0patch2.rpkg from the launch chunk0 + the installed game (MD5-checked)
 │       ├── build.py           rebuild.py hook: always writes the Nexus build kit zip (script + pkgdef.py + filelist +
 │       │                      README.txt, no audio); builds the patch only if versions/ holds the launch archive
