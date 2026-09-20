@@ -2,7 +2,7 @@ Restores the main-menu title music exactly as it played in the launch build of 0
 
 Verified working on the current Steam build (1.1.x, September 2026).
 
-[b]See also:[/b] [url=https://www.nexusmods.com/007firstlight/mods/XXX]Launch Boat Chase Music Restored (mission 9)[/url], the same treatment for the orchestral boat-chase cue that the same update replaced. Both mods work together (slots 1 and 2).
+[b]See also:[/b] [url=https://www.nexusmods.com/007firstlight/mods/217]Launch Boat Chase Music Restored (mission 9)[/url], the same treatment for the orchestral boat-chase cue that the same update replaced. Both mods work together (slots 1 and 2).
 
 [size=5][b]Installation[/b][/size]
 
