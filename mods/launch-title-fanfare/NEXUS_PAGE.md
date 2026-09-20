@@ -8,6 +8,10 @@ music clips are untouched, only four Wwise property values inside one 19 KB soun
 
 Verified working on the current Steam build (1.1.x, September 2026).
 
+See also: [Launch Boat Chase Music Restored (mission 9)](https://www.nexusmods.com/007firstlight/mods/XXX), the
+same treatment for the orchestral boat-chase cue that the same update replaced. Both mods work together (slots
+1 and 2). Source, research log and tools: https://github.com/derx05/gaming-007FirstLight-toolbox
+
 ## Install (like every other 007 First Light RPKG mod)
 
 1. Back up `…\007 First Light\Runtime\packagedefinition.txt`.

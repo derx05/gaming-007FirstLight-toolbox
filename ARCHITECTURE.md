@@ -30,6 +30,7 @@
 ├── mods/
 │   ├── launch-title-fanfare/  ── one folder per mod ──
 │       ├── NEXUS_PAGE.md      user-facing description (install, uninstall, exact change table)
+│       ├── NEXUS_PAGE.bbcode.txt  the same in Nexus BBCode for pasting into the mod page
 │       ├── RESEARCH_LOG.md    the complete investigation log (historical paths)
 │       ├── restore_fanfare.py standalone audio-free builder (python3 + lz4): rebuilds the launch bank from the
 │       │                      user's chunk0.rpkg, MD5-checked, writes chunk0patch1.rpkg

@@ -1,0 +1,57 @@
+Restores the main-menu title music exactly as it played in the launch build of 007 First Light (27 May 2026). Update 1.0.2/1.0.3 (June 2026) re-arranged the "Landing" menu-music state so the opening horn motif is skipped and faded in; this mod puts the original arrangement back. [b]No audio is added, replaced or redistributed[/b]: the game's own music clips are untouched, only four Wwise property values inside one 19 KB soundbank are restored.
+
+Verified working on the current Steam build (1.1.x, September 2026).
+
+[b]See also:[/b] [url=https://www.nexusmods.com/007firstlight/mods/XXX]Launch Boat Chase Music Restored (mission 9)[/url], the same treatment for the orchestral boat-chase cue that the same update replaced. Both mods work together (slots 1 and 2).
+
+[size=5][b]Installation[/b][/size]
+
+[b]1.[/b] Back up the game's Runtime\packagedefinition.txt.
+[b]2.[/b] Extract the release zip. Copy Runtime\chunk0patch1.rpkg and Runtime\packagedefinition.txt into the game's Runtime folder, overwriting packagedefinition.txt.
+[b]3.[/b] Start the game. The title screen now plays the original launch fanfare.
+
+[b]Notes[/b]
+[list]
+[*]The shipped packagedefinition.txt is the game's own manifest with patchlevel 310 on both partitions (identical to what other mods such as Skip Intro ship). Any patch mod needs that, because the retail file has patchlevel 0 and ignores all patch files.
+[*]Conflicts: only one mod may use the chunk0patch1 slot. If it is taken, rebuild the patch for another slot with the script from GitHub (below); do not just rename the file, the RPKG header stores the patch number.
+[*]Uninstall: delete Runtime\chunk0patch1.rpkg and restore your original packagedefinition.txt (or verify game files in Steam).
+[/list]
+
+[size=5][b]Audio-free alternative: build the patch from your own game files[/b][/size]
+
+The source is on GitHub: [url=https://github.com/derx05/gaming-007FirstLight-toolbox]github.com/derx05/gaming-007FirstLight-toolbox[/url]. The script mods\launch-title-fanfare\restore_fanfare.py contains only the restored Wwise property values (a few hundred bytes) and rebuilds the patch from your own chunk0.rpkg, MD5-checked against the launch bank:
+[code]pip install lz4
+python restore_fanfare.py "D:\SteamLibrary\steamapps\common\007 First Light\Runtime"[/code]
+It writes chunk0patch1.rpkg next to chunk0.rpkg; pass a number as second argument for another slot. The repository also holds the full research log, the tools that found the change and an offline renderer for the menu music.
+
+[size=5][b]What exactly changed in 1.0.x (and what the mod reverts)[/b][/size]
+
+Soundbank mx_mainmenu (resource 01980B15FE07DD81, Wwise 2023.1). Event MX_MainMenu_SW_Play, switch group State_MX_MainMenu, state Landing is the music that plays when the title appears. Launch versus 1.0.x:
+
+[list]
+[*]Music playlist 19EA31A3: plays segment 3A51E915 (launch) instead of segment 2C663D2D (1.0.x)
+[*]Music track 0BC0A5DA: clip starts at 3.23 s without fade (launch) instead of 12.92 s with a 3.75 s fade-in
+[*]Music track 21BB990C: clip starts at 3.23 s without fade (launch) instead of 11.08 s with a 5.37 s fade-in
+[*]Music track 21E1267C: no volume offset (launch) instead of +5 dB
+[*]Bank header: launch bank hash
+[/list]
+
+Every music clip referenced by the bank is byte-identical in all builds. The "fast triple horn" opening is simply the first ten seconds of two stems that 1.0.x trims away. The mod contains the launch values of those four objects plus the 16-byte bank hash, nothing else.
+
+[size=5][b]How the patch is applied by the game[/b][/size]
+
+chunk0patch1.rpkg is an RPKG v2 patch archive with a single resource. Its header encodes chunk 0 / patch 1, which must match the file name. The game loads every chunk0patchN.rpkg with N up to the patchlevel from the manifest, so the resource overrides the one in chunk0.rpkg. The manifest is XTEA-encrypted; the codec is in the repository.
+
+[size=5][b]Credits / tools[/b][/size]
+
+[list]
+[*][url=https://github.com/glacier-modding/RPKG-Tool]RPKG-Tool[/url] (first-light branch, glacier-modding): hash list, XTEA keys, format reference
+[*][url=https://github.com/bnnm/wwiser]wwiser[/url] (bnnm): Wwise bank parsing
+[*][url=https://vgmstream.org]vgmstream[/url]: Wwise Vorbis decoding
+[*][url=https://github.com/SteamRE/DepotDownloader]DepotDownloader[/url] (SteamRE): fetching the launch depot
+[*]The Skip Intro mod (Nexus) served as the reference for a working patch header and manifest
+[/list]
+
+The research and the tooling behind this mod were made with the help of Claude (Anthropic's Claude Code); the result was verified in game by a human.
+
+007 First Light is copyright IO Interactive. This mod ships no audio and no original game data other than the restored property values described above; the release zip additionally contains the rebuilt 19 KB soundbank (no media) and the manifest with a changed patch level.
