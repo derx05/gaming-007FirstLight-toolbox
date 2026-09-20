@@ -91,7 +91,7 @@ def build(launch, rt, patch=2, manifest=False, outdir=HERE):
         assert read_resource(f, vi[WWEM_CUR]) == launch_wem and read_resource(f, vi[WWEV]) == new_ev
     print('verified: patch reads back correctly')
     if manifest:
-        sys.path.insert(0, os.path.join(HERE, '..', '..', 'tools')); import pkgdef
+        sys.path[:0] = [HERE, os.path.join(HERE, '..', '..', 'tools')]; import pkgdef   # next to this file (build kit) or tools/
         src = open(os.path.join(rt, 'packagedefinition.txt'), 'rb').read(); hdr, crc, plain = pkgdef.decrypt(src)
         mp = os.path.join(outdir, 'packagedefinition.txt')
         open(mp, 'wb').write(pkgdef.encrypt(hdr, plain.replace(b'patchlevel=0', b'patchlevel=310'))); print('wrote', mp, '(patchlevel=310)')

@@ -42,7 +42,8 @@
 │   └── orchid-boat-chase-music/
 │       ├── NEXUS_PAGE.md      description + build tutorial (needs the launch archive)
 │       ├── build_from_launch.py  builds chunk0patch2.rpkg from the launch chunk0 + the installed game (MD5-checked)
-│       ├── build.py           rebuild.py hook: builds if versions/ holds the launch archive, else skips
+│       ├── build.py           rebuild.py hook: always writes the Nexus build kit zip (script + pkgdef.py + filelist +
+│       │                      README.txt, no audio); builds the patch only if versions/ holds the launch archive
 │       ├── RESEARCH_LOG.md    how the swapped stem, its bank and its switch path were found; dead ends
 │       ├── research/          the four research scripts (annotated) + media lists of the music event, both builds
 │       ├── packagedefinition.txt  manifest with patchlevel=310 (identical to the fanfare mod's)              [committed]
